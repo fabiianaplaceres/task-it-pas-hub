@@ -5,10 +5,15 @@
 --   ana@pashub.test         / Demo1234!   (rol: colaborador)
 
 -- 1) Usuarios demo en auth.users (dispara el trigger que crea la fila en public.usuarios)
+-- Nota: los campos *_token y email_change* deben quedar en '' (no NULL), porque
+-- GoTrue (Supabase Auth) rechaza el login con "Invalid login credentials" si son NULL.
 insert into auth.users (
   instance_id, id, aud, role, email, encrypted_password,
   email_confirmed_at, created_at, updated_at,
-  raw_app_meta_data, raw_user_meta_data
+  raw_app_meta_data, raw_user_meta_data,
+  confirmation_token, recovery_token, email_change,
+  email_change_token_new, email_change_token_current,
+  phone_change, phone_change_token, reauthentication_token
 )
 select
   '00000000-0000-0000-0000-000000000000',
@@ -21,7 +26,8 @@ select
   now(),
   now(),
   '{"provider":"email","providers":["email"]}',
-  jsonb_build_object('nombre', u.nombre, 'rol', u.rol)
+  jsonb_build_object('nombre', u.nombre, 'rol', u.rol),
+  '', '', '', '', '', '', '', ''
 from (values
   ('gerente@pashub.test', 'Fabiana Gerente', 'gerente'),
   ('colaborador@pashub.test', 'Carlos Colaborador', 'colaborador'),
