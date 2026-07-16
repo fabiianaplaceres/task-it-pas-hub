@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, PlayCircle } from "lucide-react";
+import { BookOpen, PlayCircle, Search } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getUsuarioActual } from "@/lib/auth";
 import type { Categoria, Favorito, Proceso } from "@/lib/types";
@@ -8,9 +8,9 @@ import FavoritoButton from "@/components/favorito-button";
 export default async function BibliotecaPage({
   searchParams,
 }: {
-  searchParams: Promise<{ categoria?: string }>;
+  searchParams: Promise<{ categoria?: string; q?: string }>;
 }) {
-  const { categoria } = await searchParams;
+  const { categoria, q } = await searchParams;
   const usuario = await getUsuarioActual();
   const supabase = await createClient();
 
@@ -22,6 +22,10 @@ export default async function BibliotecaPage({
 
   if (categoria) {
     query = query.eq("categoria_id", categoria);
+  }
+  const qSanitizado = q?.replace(/[,()"%]/g, "").trim();
+  if (qSanitizado) {
+    query = query.or(`titulo.ilike."%${qSanitizado}%",descripcion_corta.ilike."%${qSanitizado}%"`);
   }
 
   const [{ data: procesos }, { data: favoritos }, { data: categoriaActiva }] = await Promise.all([
@@ -44,9 +48,25 @@ export default async function BibliotecaPage({
         Guías paso a paso, plantillas y buenas prácticas de PAS.
       </p>
 
+      <form method="GET" className="mt-4 flex max-w-sm items-center gap-2">
+        {categoria && <input type="hidden" name="categoria" value={categoria} />}
+        <div className="relative flex-1">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+          <input
+            type="text"
+            name="q"
+            defaultValue={q ?? ""}
+            placeholder="Buscar procesos..."
+            className="w-full rounded-lg border border-border bg-surface-2 py-2 pl-9 pr-3 text-sm"
+          />
+        </div>
+      </form>
+
       {lista.length === 0 ? (
         <p className="mt-8 rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted">
-          Todavía no hay procesos publicados en esta categoría.
+          {q
+            ? "No se encontraron procesos que coincidan con tu búsqueda."
+            : "Todavía no hay procesos publicados en esta categoría."}
         </p>
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
