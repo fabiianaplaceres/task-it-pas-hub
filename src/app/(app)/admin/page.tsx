@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { FolderKanban, Plus, ShieldCheck, Users } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getUsuarioActual } from "@/lib/auth";
-import { crearCategoria } from "@/lib/actions/admin";
+import { crearCategoria, crearUsuario } from "@/lib/actions/admin";
 import PublicarToggle from "@/components/publicar-toggle";
 import type { Categoria, Proceso, Usuario } from "@/lib/types";
 
@@ -147,6 +147,48 @@ export default async function AdminPage() {
             </tbody>
           </table>
         </div>
+
+        <form
+          action={crearUsuario}
+          className="mt-3 grid max-w-2xl grid-cols-1 gap-2 sm:grid-cols-[1.5fr_1.5fr_1fr_1fr_auto]"
+        >
+          <input
+            name="nombre"
+            placeholder="Nombre completo"
+            required
+            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            required
+            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Contraseña"
+            required
+            minLength={8}
+            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+          />
+          <select
+            name="rol"
+            defaultValue="colaborador"
+            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+          >
+            <option value="colaborador">Colaborador</option>
+            <option value="gerente">Gerente</option>
+          </select>
+          <button
+            type="submit"
+            className="flex items-center justify-center gap-1 rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"
+          >
+            <Plus className="h-4 w-4" />
+            Crear
+          </button>
+        </form>
       </section>
     </div>
   );
