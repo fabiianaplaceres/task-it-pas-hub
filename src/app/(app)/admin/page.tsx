@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import { FolderKanban, Plus, ShieldCheck, Users } from "lucide-react";
+import { FolderKanban, Pencil, Plus, ShieldCheck, Users } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getUsuarioActual } from "@/lib/auth";
 import { crearCategoria, crearUsuario } from "@/lib/actions/admin";
@@ -38,11 +39,20 @@ export default async function AdminPage() {
       </p>
 
       <section className="mt-8">
-        <div className="flex items-center gap-2">
-          <FolderKanban className="h-4 w-4 text-muted" />
-          <h2 className="text-sm font-semibold text-muted">
-            Procesos ({listaProcesos.length})
-          </h2>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <FolderKanban className="h-4 w-4 text-muted" />
+            <h2 className="text-sm font-semibold text-muted">
+              Procesos ({listaProcesos.length})
+            </h2>
+          </div>
+          <Link
+            href="/admin/procesos/nuevo"
+            className="flex items-center gap-1 rounded-lg bg-ey-yellow px-3 py-1.5 text-xs font-medium text-black transition hover:brightness-95"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            Nuevo proceso
+          </Link>
         </div>
         <div className="mt-3 overflow-hidden rounded-xl border border-border">
           <table className="w-full text-left text-sm">
@@ -51,6 +61,7 @@ export default async function AdminPage() {
                 <th className="px-4 py-2 font-medium">Título</th>
                 <th className="px-4 py-2 font-medium">Categoría</th>
                 <th className="px-4 py-2 font-medium">Estado</th>
+                <th className="px-4 py-2 font-medium"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -63,11 +74,20 @@ export default async function AdminPage() {
                   <td className="px-4 py-2.5">
                     <PublicarToggle procesoId={proceso.id} estado={proceso.estado} />
                   </td>
+                  <td className="px-4 py-2.5 text-right">
+                    <Link
+                      href={`/admin/procesos/${proceso.id}`}
+                      aria-label="Editar proceso"
+                      className="inline-flex rounded-lg p-1.5 text-muted transition hover:bg-surface-2 hover:text-foreground"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Link>
+                  </td>
                 </tr>
               ))}
               {listaProcesos.length === 0 && (
                 <tr>
-                  <td colSpan={3} className="px-4 py-6 text-center text-muted">
+                  <td colSpan={4} className="px-4 py-6 text-center text-muted">
                     No hay procesos cargados todavía.
                   </td>
                 </tr>
