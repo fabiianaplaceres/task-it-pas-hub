@@ -1,7 +1,6 @@
-import { Suspense } from "react";
 import { getUsuarioActual } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import Sidebar from "@/components/sidebar";
+import AppShell from "@/components/app-shell";
 
 export default async function AppLayout({
   children,
@@ -25,18 +24,13 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="flex w-full">
-      <Suspense fallback={<div className="h-screen w-64 shrink-0 border-r border-border bg-surface" />}>
-        <Sidebar
-          usuario={usuario}
-          categorias={categorias ?? []}
-          procesoCountByCategoria={procesoCountByCategoria}
-          totalProcesos={procesos?.length ?? 0}
-        />
-      </Suspense>
-      <main className="min-h-screen flex-1 overflow-y-auto bg-background">
-        {children}
-      </main>
-    </div>
+    <AppShell
+      usuario={usuario}
+      categorias={categorias ?? []}
+      procesoCountByCategoria={procesoCountByCategoria}
+      totalProcesos={procesos?.length ?? 0}
+    >
+      {children}
+    </AppShell>
   );
 }
