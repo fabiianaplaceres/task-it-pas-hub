@@ -21,7 +21,7 @@ export default function LoginForm() {
           autoComplete="email"
           required
           placeholder="nombre@ey.com"
-          className="rounded-lg border border-border bg-surface-2 px-3 py-2.5 text-sm text-foreground outline-none placeholder:text-muted focus:border-ey-yellow"
+          className="field py-2.5"
         />
       </div>
 
@@ -36,7 +36,7 @@ export default function LoginForm() {
           autoComplete="current-password"
           required
           placeholder="••••••••"
-          className="rounded-lg border border-border bg-surface-2 px-3 py-2.5 text-sm text-foreground outline-none placeholder:text-muted focus:border-ey-yellow"
+          className="field py-2.5"
         />
       </div>
 

@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getUsuarioActual } from "@/lib/auth";
 import { crearProceso } from "@/lib/actions/admin";
 import SubmitButton from "@/components/submit-button";
+import SelectField from "@/components/select-field";
 import type { Categoria } from "@/lib/types";
 
 export default async function NuevoProcesoPage() {
@@ -38,7 +39,7 @@ export default async function NuevoProcesoPage() {
           <input
             name="titulo"
             required
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field w-full"
           />
         </div>
 
@@ -48,24 +49,23 @@ export default async function NuevoProcesoPage() {
           </label>
           <input
             name="descripcion_corta"
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field w-full"
           />
         </div>
 
         <div>
           <label className="mb-1 block text-xs font-medium text-muted">Categoría</label>
-          <select
+          <SelectField
             name="categoria_id"
             defaultValue=""
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
-          >
-            <option value="">Sin categoría</option>
-            {(categorias as Categoria[] | null ?? []).map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.nombre}
-              </option>
-            ))}
-          </select>
+            options={[
+              { value: "", label: "Sin categoría" },
+              ...((categorias as Categoria[] | null) ?? []).map((cat) => ({
+                value: cat.id,
+                label: cat.nombre,
+              })),
+            ]}
+          />
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-[2fr_1fr]">
@@ -75,7 +75,7 @@ export default async function NuevoProcesoPage() {
               name="video_url"
               type="url"
               placeholder="https://..."
-              className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+              className="field w-full"
             />
           </div>
           <div>
@@ -83,7 +83,7 @@ export default async function NuevoProcesoPage() {
             <input
               name="duracion_video"
               placeholder="4:30"
-              className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+              className="field w-full"
             />
           </div>
         </div>
@@ -96,7 +96,7 @@ export default async function NuevoProcesoPage() {
             name="guia_contenido"
             rows={6}
             placeholder="1. Primer paso...&#10;2. Segundo paso..."
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field w-full"
           />
         </div>
 
@@ -107,7 +107,7 @@ export default async function NuevoProcesoPage() {
           <textarea
             name="buenas_practicas"
             rows={3}
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field w-full"
           />
         </div>
 

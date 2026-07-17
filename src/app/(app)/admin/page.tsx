@@ -6,6 +6,7 @@ import { getUsuarioActual } from "@/lib/auth";
 import { crearCategoria, crearUsuario } from "@/lib/actions/admin";
 import PublicarToggle from "@/components/publicar-toggle";
 import SubmitButton from "@/components/submit-button";
+import SelectField from "@/components/select-field";
 import type { Categoria, Proceso, Usuario } from "@/lib/types";
 
 export default async function AdminPage() {
@@ -113,12 +114,7 @@ export default async function AdminPage() {
           ))}
         </div>
         <form action={crearCategoria} className="mt-3 flex max-w-sm gap-2">
-          <input
-            name="nombre"
-            placeholder="Nueva categoría"
-            required
-            className="flex-1 rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
-          />
+          <input name="nombre" placeholder="Nueva categoría" required className="field flex-1" />
           <SubmitButton
             pendingText="Agregando..."
             className="flex items-center gap-1 rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"
@@ -173,35 +169,24 @@ export default async function AdminPage() {
           action={crearUsuario}
           className="mt-3 grid max-w-2xl grid-cols-1 gap-2 sm:grid-cols-[1.5fr_1.5fr_1fr_1fr_auto]"
         >
-          <input
-            name="nombre"
-            placeholder="Nombre completo"
-            required
-            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
-          />
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            required
-            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
-          />
+          <input name="nombre" placeholder="Nombre completo" required className="field" />
+          <input name="email" type="email" placeholder="Email" required className="field" />
           <input
             name="password"
             type="password"
             placeholder="Contraseña"
             required
             minLength={8}
-            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field"
           />
-          <select
+          <SelectField
             name="rol"
             defaultValue="colaborador"
-            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
-          >
-            <option value="colaborador">Colaborador</option>
-            <option value="gerente">Gerente</option>
-          </select>
+            options={[
+              { value: "colaborador", label: "Colaborador" },
+              { value: "gerente", label: "Gerente" },
+            ]}
+          />
           <SubmitButton
             pendingText="Creando..."
             className="flex items-center justify-center gap-1 rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"

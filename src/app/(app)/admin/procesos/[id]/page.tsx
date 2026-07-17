@@ -6,6 +6,7 @@ import { getUsuarioActual } from "@/lib/auth";
 import { actualizarProceso, agregarPlantilla, eliminarPlantilla } from "@/lib/actions/admin";
 import PublicarToggle from "@/components/publicar-toggle";
 import SubmitButton from "@/components/submit-button";
+import SelectField from "@/components/select-field";
 import type { Categoria, Plantilla, Proceso } from "@/lib/types";
 
 export default async function EditarProcesoPage({
@@ -56,7 +57,7 @@ export default async function EditarProcesoPage({
             name="titulo"
             required
             defaultValue={p.titulo}
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field w-full"
           />
         </div>
 
@@ -67,24 +68,23 @@ export default async function EditarProcesoPage({
           <input
             name="descripcion_corta"
             defaultValue={p.descripcion_corta ?? ""}
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field w-full"
           />
         </div>
 
         <div>
           <label className="mb-1 block text-xs font-medium text-muted">Categoría</label>
-          <select
+          <SelectField
             name="categoria_id"
             defaultValue={p.categoria_id ?? ""}
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
-          >
-            <option value="">Sin categoría</option>
-            {(categorias as Categoria[] | null ?? []).map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.nombre}
-              </option>
-            ))}
-          </select>
+            options={[
+              { value: "", label: "Sin categoría" },
+              ...((categorias as Categoria[] | null) ?? []).map((cat) => ({
+                value: cat.id,
+                label: cat.nombre,
+              })),
+            ]}
+          />
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-[2fr_1fr]">
@@ -95,7 +95,7 @@ export default async function EditarProcesoPage({
               type="url"
               placeholder="https://..."
               defaultValue={p.video_url ?? ""}
-              className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+              className="field w-full"
             />
           </div>
           <div>
@@ -104,7 +104,7 @@ export default async function EditarProcesoPage({
               name="duracion_video"
               placeholder="4:30"
               defaultValue={p.duracion_video ?? ""}
-              className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+              className="field w-full"
             />
           </div>
         </div>
@@ -117,7 +117,7 @@ export default async function EditarProcesoPage({
             name="guia_contenido"
             rows={6}
             defaultValue={p.guia_contenido ?? ""}
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field w-full"
           />
         </div>
 
@@ -129,7 +129,7 @@ export default async function EditarProcesoPage({
             name="buenas_practicas"
             rows={3}
             defaultValue={p.buenas_practicas ?? ""}
-            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field w-full"
           />
         </div>
 
@@ -204,24 +204,24 @@ export default async function EditarProcesoPage({
             name="nombre"
             placeholder="Nombre del archivo"
             required
-            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field"
           />
           <input
             name="archivo_url"
             type="url"
             placeholder="https://..."
             required
-            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+            className="field"
           />
-          <select
+          <SelectField
             name="tipo"
             defaultValue="pdf"
-            className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
-          >
-            <option value="pdf">PDF</option>
-            <option value="docx">DOCX</option>
-            <option value="xlsx">XLSX</option>
-          </select>
+            options={[
+              { value: "pdf", label: "PDF" },
+              { value: "docx", label: "DOCX" },
+              { value: "xlsx", label: "XLSX" },
+            ]}
+          />
           <SubmitButton
             pendingText="Agregando..."
             className="rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"

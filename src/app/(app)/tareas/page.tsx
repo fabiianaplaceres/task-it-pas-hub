@@ -5,6 +5,7 @@ import { getUsuarioActual } from "@/lib/auth";
 import { crearTarea } from "@/lib/actions/tareas";
 import EstadoSelect from "@/components/estado-select";
 import SubmitButton from "@/components/submit-button";
+import SelectField from "@/components/select-field";
 import {
   ESTADO_TAREA_LABEL,
   ETIQUETA_LABEL,
@@ -68,19 +69,19 @@ export default async function TareasPage() {
               name="titulo"
               placeholder="Título de la tarea"
               required
-              className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm sm:col-span-2"
+              className="field sm:col-span-2"
             />
             <textarea
               name="descripcion"
               placeholder="Descripción (opcional)"
               rows={2}
-              className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm sm:col-span-2"
+              className="field sm:col-span-2"
             />
             <select
               name="usuario_asignado_id"
               required
               defaultValue=""
-              className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+              className="field"
             >
               <option value="" disabled>
                 Asignar a...
@@ -91,23 +92,16 @@ export default async function TareasPage() {
                 </option>
               ))}
             </select>
-            <select
+            <SelectField
               name="etiqueta"
               defaultValue=""
-              className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
-            >
-              <option value="">Sin etiqueta</option>
-              {Object.entries(ETIQUETA_LABEL).map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-            <input
-              type="date"
-              name="fecha_limite"
-              className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
+              placeholder="Sin etiqueta"
+              options={[
+                { value: "", label: "Sin etiqueta" },
+                ...Object.entries(ETIQUETA_LABEL).map(([value, label]) => ({ value, label })),
+              ]}
             />
+            <input type="date" name="fecha_limite" className="field" />
             <SubmitButton
               pendingText="Creando..."
               className="rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"

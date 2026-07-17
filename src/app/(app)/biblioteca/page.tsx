@@ -57,7 +57,7 @@ export default async function BibliotecaPage({
             name="q"
             defaultValue={q ?? ""}
             placeholder="Buscar procesos..."
-            className="w-full rounded-lg border border-border bg-surface-2 py-2 pl-9 pr-3 text-sm"
+            className="field w-full py-2 pl-9 pr-3"
           />
         </div>
       </form>

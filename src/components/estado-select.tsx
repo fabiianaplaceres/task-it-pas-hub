@@ -3,8 +3,10 @@
 import { useTransition } from "react";
 import { actualizarEstadoTarea } from "@/lib/actions/tareas";
 import { ESTADO_TAREA_LABEL, type EstadoTarea } from "@/lib/types";
+import SelectField from "@/components/select-field";
 
 const ESTADOS: EstadoTarea[] = ["pendiente", "en_progreso", "completada"];
+const OPCIONES = ESTADOS.map((e) => ({ value: e, label: ESTADO_TAREA_LABEL[e] }));
 
 export default function EstadoSelect({
   tareaId,
@@ -16,21 +18,21 @@ export default function EstadoSelect({
   const [isPending, startTransition] = useTransition();
 
   return (
-    <select
-      value={estado}
-      disabled={isPending}
-      onClick={(e) => e.stopPropagation()}
-      onChange={(e) => {
-        const nuevoEstado = e.target.value as EstadoTarea;
-        startTransition(() => actualizarEstadoTarea(tareaId, nuevoEstado));
+    <div
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
       }}
-      className="rounded-lg border border-border bg-surface-2 px-2 py-1 text-xs text-foreground disabled:opacity-50"
     >
-      {ESTADOS.map((e) => (
-        <option key={e} value={e}>
-          {ESTADO_TAREA_LABEL[e]}
-        </option>
-      ))}
-    </select>
+      <SelectField
+        compact
+        value={estado}
+        disabled={isPending}
+        options={OPCIONES}
+        onChange={(nuevoEstado) =>
+          startTransition(() => actualizarEstadoTarea(tareaId, nuevoEstado as EstadoTarea))
+        }
+      />
+    </div>
   );
 }
