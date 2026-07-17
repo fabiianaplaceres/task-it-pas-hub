@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getUsuarioActual } from "@/lib/auth";
 import { actualizarProceso, agregarPlantilla, eliminarPlantilla } from "@/lib/actions/admin";
 import PublicarToggle from "@/components/publicar-toggle";
+import SubmitButton from "@/components/submit-button";
 import type { Categoria, Plantilla, Proceso } from "@/lib/types";
 
 export default async function EditarProcesoPage({
@@ -153,12 +154,12 @@ export default async function EditarProcesoPage({
           </label>
         </div>
 
-        <button
-          type="submit"
+        <SubmitButton
+          pendingText="Guardando..."
           className="mt-2 self-start rounded-lg bg-ey-yellow px-4 py-2 text-sm font-medium text-black transition hover:brightness-95"
         >
           Guardar cambios
-        </button>
+        </SubmitButton>
       </form>
 
       <section className="mt-10">
@@ -177,13 +178,13 @@ export default async function EditarProcesoPage({
                   <span className="text-xs uppercase text-muted">{plantilla.tipo}</span>
                 </span>
                 <form action={eliminarPlantillaConId}>
-                  <button
-                    type="submit"
-                    aria-label="Eliminar plantilla"
+                  <SubmitButton
+                    pendingText="…"
+                    ariaLabel="Eliminar plantilla"
                     className="rounded-lg p-1.5 text-muted transition hover:bg-surface-2 hover:text-red-400"
                   >
                     <Trash2 className="h-4 w-4" />
-                  </button>
+                  </SubmitButton>
                 </form>
               </div>
             );
@@ -221,12 +222,12 @@ export default async function EditarProcesoPage({
             <option value="docx">DOCX</option>
             <option value="xlsx">XLSX</option>
           </select>
-          <button
-            type="submit"
+          <SubmitButton
+            pendingText="Agregando..."
             className="rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"
           >
             Agregar
-          </button>
+          </SubmitButton>
         </form>
       </section>
     </div>

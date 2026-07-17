@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getUsuarioActual } from "@/lib/auth";
 import { crearProceso } from "@/lib/actions/admin";
+import SubmitButton from "@/components/submit-button";
 import type { Categoria } from "@/lib/types";
 
 export default async function NuevoProcesoPage() {
@@ -121,12 +122,12 @@ export default async function NuevoProcesoPage() {
           </label>
         </div>
 
-        <button
-          type="submit"
+        <SubmitButton
+          pendingText="Creando..."
           className="mt-2 self-start rounded-lg bg-ey-yellow px-4 py-2 text-sm font-medium text-black transition hover:brightness-95"
         >
           Crear proceso
-        </button>
+        </SubmitButton>
       </form>
     </div>
   );

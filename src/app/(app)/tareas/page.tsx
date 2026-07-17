@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getUsuarioActual } from "@/lib/auth";
 import { crearTarea } from "@/lib/actions/tareas";
 import EstadoSelect from "@/components/estado-select";
+import SubmitButton from "@/components/submit-button";
 import {
   ESTADO_TAREA_LABEL,
   ETIQUETA_LABEL,
@@ -107,12 +108,12 @@ export default async function TareasPage() {
               name="fecha_limite"
               className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
             />
-            <button
-              type="submit"
+            <SubmitButton
+              pendingText="Creando..."
               className="rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"
             >
               Crear tarea
-            </button>
+            </SubmitButton>
           </form>
         </details>
       ) : null}

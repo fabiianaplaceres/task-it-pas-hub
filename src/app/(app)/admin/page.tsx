@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getUsuarioActual } from "@/lib/auth";
 import { crearCategoria, crearUsuario } from "@/lib/actions/admin";
 import PublicarToggle from "@/components/publicar-toggle";
+import SubmitButton from "@/components/submit-button";
 import type { Categoria, Proceso, Usuario } from "@/lib/types";
 
 export default async function AdminPage() {
@@ -118,13 +119,13 @@ export default async function AdminPage() {
             required
             className="flex-1 rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm"
           />
-          <button
-            type="submit"
+          <SubmitButton
+            pendingText="Agregando..."
             className="flex items-center gap-1 rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"
           >
             <Plus className="h-4 w-4" />
             Agregar
-          </button>
+          </SubmitButton>
         </form>
       </section>
 
@@ -201,13 +202,13 @@ export default async function AdminPage() {
             <option value="colaborador">Colaborador</option>
             <option value="gerente">Gerente</option>
           </select>
-          <button
-            type="submit"
+          <SubmitButton
+            pendingText="Creando..."
             className="flex items-center justify-center gap-1 rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"
           >
             <Plus className="h-4 w-4" />
             Crear
-          </button>
+          </SubmitButton>
         </form>
       </section>
     </div>
