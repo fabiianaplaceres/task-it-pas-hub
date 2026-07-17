@@ -90,6 +90,8 @@ export async function crearUsuario(formData: FormData) {
   }
 
   revalidatePath("/admin");
+  revalidatePath("/tareas");
+  revalidatePath("/equipo");
 }
 
 function procesoCamposDesdeFormData(formData: FormData) {
