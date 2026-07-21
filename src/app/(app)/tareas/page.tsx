@@ -142,6 +142,7 @@ export default async function TareasPage() {
                       <Link
                         key={tarea.id}
                         href={`/tareas/${tarea.id}`}
+                        prefetch={false}
                         className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-4 transition hover:border-ey-yellow/60"
                       >
                         <p className="text-sm font-medium leading-snug">{tarea.titulo}</p>

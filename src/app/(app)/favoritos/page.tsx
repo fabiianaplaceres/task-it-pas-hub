@@ -39,6 +39,7 @@ export default async function FavoritosPage() {
             <Link
               key={proceso.id}
               href={`/biblioteca/${proceso.id}`}
+              prefetch={false}
               className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-4 transition hover:border-ey-yellow/60"
             >
               <div className="flex items-start justify-between gap-2">

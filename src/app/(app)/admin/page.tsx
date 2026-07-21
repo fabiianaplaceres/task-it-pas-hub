@@ -80,6 +80,7 @@ export default async function AdminPage() {
                     <Link
                       href={`/admin/procesos/${proceso.id}`}
                       aria-label="Editar proceso"
+                      prefetch={false}
                       className="inline-flex rounded-lg p-1.5 text-muted transition hover:bg-surface-2 hover:text-foreground"
                     >
                       <Pencil className="h-4 w-4" />
