@@ -36,13 +36,4 @@ body {
   .field {
     @apply rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm text-foreground outline-none transition-colors duration-150 placeholder:text-muted hover:border-muted/50 focus:border-ey-yellow focus:ring-2 focus:ring-ey-yellow/20;
   }
-
-  .field[type="date"] {
-    color-scheme: dark;
-  }
-
-  .field[type="date"]::-webkit-calendar-picker-indicator {
-    @apply cursor-pointer rounded-md p-1 transition-colors duration-150 hover:bg-surface;
-    filter: invert(90%) sepia(60%) saturate(900%) hue-rotate(2deg) brightness(103%);
-  }
 }

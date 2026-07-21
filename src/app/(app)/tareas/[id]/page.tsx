@@ -7,6 +7,7 @@ import { actualizarTarea, eliminarTarea } from "@/lib/actions/tareas";
 import EstadoSelect from "@/components/estado-select";
 import SubmitButton from "@/components/submit-button";
 import SelectField from "@/components/select-field";
+import DateField from "@/components/date-field";
 import { ETIQUETA_LABEL, type Tarea, type Usuario } from "@/lib/types";
 
 function formatFecha(fecha: string) {
@@ -83,18 +84,16 @@ export default async function TareaDetallePage({
                 <label className="mb-1 block text-xs font-medium text-muted">
                   Asignar a *
                 </label>
-                <select
+                <SelectField
                   name="usuario_asignado_id"
-                  required
                   defaultValue={t.usuario_asignado_id ?? ""}
-                  className="field w-full"
-                >
-                  {((colaboradores as Usuario[] | null) ?? []).map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.nombre}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Asignar a..."
+                  className="w-full"
+                  options={((colaboradores as Usuario[] | null) ?? []).map((c) => ({
+                    value: c.id,
+                    label: c.nombre,
+                  }))}
+                />
               </div>
               <div>
                 <label className="mb-1 block text-xs font-medium text-muted">Etiqueta</label>
@@ -112,11 +111,11 @@ export default async function TareaDetallePage({
 
             <div>
               <label className="mb-1 block text-xs font-medium text-muted">Fecha límite</label>
-              <input
-                type="date"
+              <DateField
                 name="fecha_limite"
                 defaultValue={t.fecha_limite ?? ""}
-                className="field w-full"
+                placeholder="Sin fecha límite"
+                className="w-full"
               />
             </div>
 

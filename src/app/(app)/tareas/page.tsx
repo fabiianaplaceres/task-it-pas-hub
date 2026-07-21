@@ -6,6 +6,7 @@ import { crearTarea } from "@/lib/actions/tareas";
 import EstadoSelect from "@/components/estado-select";
 import SubmitButton from "@/components/submit-button";
 import SelectField from "@/components/select-field";
+import DateField from "@/components/date-field";
 import {
   ESTADO_TAREA_LABEL,
   ETIQUETA_LABEL,
@@ -77,21 +78,15 @@ export default async function TareasPage() {
               rows={2}
               className="field sm:col-span-2"
             />
-            <select
+            <SelectField
               name="usuario_asignado_id"
-              required
               defaultValue=""
-              className="field"
-            >
-              <option value="" disabled>
-                Asignar a...
-              </option>
-              {(colaboradores as Usuario[]).map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.nombre}
-                </option>
-              ))}
-            </select>
+              placeholder="Asignar a..."
+              options={(colaboradores as Usuario[]).map((c) => ({
+                value: c.id,
+                label: c.nombre,
+              }))}
+            />
             <SelectField
               name="etiqueta"
               defaultValue=""
@@ -101,7 +96,7 @@ export default async function TareasPage() {
                 ...Object.entries(ETIQUETA_LABEL).map(([value, label]) => ({ value, label })),
               ]}
             />
-            <input type="date" name="fecha_limite" className="field" />
+            <DateField name="fecha_limite" placeholder="Fecha límite" />
             <SubmitButton
               pendingText="Creando..."
               className="rounded-lg bg-ey-yellow px-3 py-2 text-sm font-medium text-black transition hover:brightness-95"
